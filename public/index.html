@@ -2,8 +2,36 @@
 <html>
     <head>
         <title>Home Automation System</title>
+        <script>
+            function post(s, f) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        f(xhttp);
+                    }
+                };
+                xhttp.open("POST", s, true);
+                xhttp.send();
+            }
+            function start() {
+                post("start", function(xhttp) {
+                    document.getElementById("isRunning").innerHTML = xhttp.responseText;
+                });
+            }
+            function stop() {
+                post("stop", function(xhttp) {
+                    document.getElementById("isRunning").innerHTML = xhttp.responseText;
+                });
+            }
+        </script>
     </head>
     <body>
-        Hello, world!
+        <h1>System running: <span id="isRunning">False</span></h1>
+        <form onsubmit="start(); return false;">
+            <input type="submit" value="Start">
+        </form>
+        <form onsubmit="stop(); return false;">
+            <input type="submit" value="Stop">
+        </form>
     </body>
 </html>

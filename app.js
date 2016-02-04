@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 
-var send = function(str) {
+var sendRequest = function(str, response) {
     var options = {
         host: 'localhost',
         path: '/'+str,
@@ -11,12 +11,12 @@ var send = function(str) {
     var callback = function(res) {
         var result = '';
 
-        res.on('data', function (s) {
+        res.on('data', function(s) {
             result += s;
         });
 
-        res.on('end', function () {
-            return result;
+        res.on('end', function() {
+            response.send(result);
         });
     };
     http.request(options, callback).end();
@@ -27,8 +27,12 @@ app.get('/', function(req, res) {
     res.sendFile('index.html');
 });
 
-app.get('/wake', function(req, res) {
-    res.send(send("wake"));
+app.post('/start', function(req, res) {
+    sendRequest('start', res);
+});
+
+app.post('/stop', function(req, res) {
+    sendRequest('stop', res);
 });
 
 var port = process.env.PORT || 3000;
