@@ -13,11 +13,13 @@
                 xhttp.open("POST", s, true);
                 xhttp.send();
             }
+
             function start() {
                 post("start", function(xhttp) {
                     document.getElementById("isRunning").innerHTML = xhttp.responseText;
                 });
             }
+
             function stop() {
                 post("stop", function(xhttp) {
                     document.getElementById("isRunning").innerHTML = xhttp.responseText;
