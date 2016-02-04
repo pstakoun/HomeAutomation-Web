@@ -1,6 +1,26 @@
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
+var http = require('http');
+
+var send = function(str) {
+    var options = {
+        host: 'localhost',
+        path: '/'+str,
+        port: '5000'
+    };
+    var callback = function(res) {
+        var result = '';
+
+        res.on('data', function (s) {
+            result += s;
+        });
+
+        res.on('end', function () {
+            return result;
+        });
+    };
+    http.request(options, callback).end();
+};
 
 app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
@@ -8,10 +28,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/wake', function(req, res) {
-    // TODO wake system
+    res.send(send("wake"));
 });
 
 var port = process.env.PORT || 3000;
-http.listen(port, function() {
+app.listen(port, function() {
     console.log('Server running on port ' + port);
 });
