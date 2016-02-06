@@ -7,27 +7,48 @@
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200) {
-                        f(xhttp);
+                        f(xhttp.responseText);
                     }
                 };
                 xhttp.open("POST", s, true);
                 xhttp.send();
             }
 
+            function setAddress() {
+                post("set-host/"+document.getElementById("systemHost").value, function(res) {});
+                post("set-port/"+document.getElementById("systemPort").value, function(res) {});
+            }
+
             function start() {
-                post("start", function(xhttp) {
-                    document.getElementById("isRunning").innerHTML = xhttp.responseText;
+                post("start", function(res) {
+                    if (res.substring(0, 5) == "ERROR") {
+                        document.getElementById("error").innerHTML = res;
+                    } else {
+                        document.getElementById("isRunning").innerHTML = res;
+                        document.getElementById("error").innerHTML = '';
+                    }
                 });
             }
 
             function stop() {
-                post("stop", function(xhttp) {
-                    document.getElementById("isRunning").innerHTML = xhttp.responseText;
+                post("stop", function(res) {
+                    if (res.substring(0, 5) == "ERROR") {
+                        document.getElementById("error").innerHTML = res;
+                    } else {
+                        document.getElementById("isRunning").innerHTML = res;
+                        document.getElementById("error").innerHTML = '';
+                    }
                 });
             }
         </script>
     </head>
     <body>
+        <h2 id="error"></h2>
+        <form onsubmit="setAddress(); return false;">
+            <input type="text" id="systemHost" placeholder="host">
+            <input type="number" id="systemPort" placeholder="port">
+            <input type="submit" value="Set Address">
+        </form>
         <h1>System running: <span id="isRunning">False</span></h1>
         <form onsubmit="start(); return false;">
             <input type="submit" value="Start">

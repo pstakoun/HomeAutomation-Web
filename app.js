@@ -1,12 +1,14 @@
 var express = require('express');
 var app = express();
 var http = require('http');
+var host;
+var port;
 
 var sendRequest = function(str, response) {
     var options = {
-        host: 'localhost',
+        host: host,
         path: '/'+str,
-        port: '5000'
+        port: port
     };
     var callback = function(res) {
         var result = '';
@@ -19,12 +21,22 @@ var sendRequest = function(str, response) {
             response.send(result);
         });
     };
-    http.request(options, callback).end();
+    http.request(options, callback).on('error', function (e) { response.send('ERROR: Connection error!'); }).end();
 };
 
 app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
     res.sendFile('index.html');
+});
+
+app.post('/set-host/:host', function(req, res) {
+    host = req.params.host;
+    res.send('');
+});
+
+app.post('/set-port/:port', function(req, res) {
+    port = parseInt(req.params.port);
+    res.send('');
 });
 
 app.post('/start', function(req, res) {
