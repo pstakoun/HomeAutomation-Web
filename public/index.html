@@ -44,17 +44,11 @@
     </head>
     <body>
         <h2 id="error"></h2>
-        <form onsubmit="setAddress(); return false;">
-            <input type="text" id="systemHost" placeholder="host">
-            <input type="number" id="systemPort" placeholder="port">
-            <input type="submit" value="Set Address">
-        </form>
+        <input type="text" id="systemHost" placeholder="host">
+        <input type="number" id="systemPort" placeholder="port">
+        <button onclick="setAddress()">Set Address</button>
         <h1>System running: <span id="isRunning">False</span></h1>
-        <form onsubmit="start(); return false;">
-            <input type="submit" value="Start">
-        </form>
-        <form onsubmit="stop(); return false;">
-            <input type="submit" value="Stop">
-        </form>
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
     </body>
 </html>
