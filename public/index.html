@@ -46,7 +46,7 @@
                     return;
                 }
                 post("capture/"+n, function(res) {
-                    document.getElementById("captures").innerHTML = res + document.getElementById("captures").innerHTML
+                    document.getElementById("captures").innerHTML = res + document.getElementById("captures").innerHTML;
                     getCaptures(n-1);
                 });
             }
