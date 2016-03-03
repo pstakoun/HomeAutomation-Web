@@ -40,6 +40,23 @@
                     }
                 });
             }
+
+            function getCaptures(n) {
+                if (n < 0) {
+                    return;
+                }
+                post("capture/"+n, function(res) {
+                    document.getElementById("captures").innerHTML = res + document.getElementById("captures").innerHTML
+                    getCaptures(n-1);
+                });
+            }
+
+            (function() {
+                post("count-captures", function(res) {
+                    var count = parseInt(res);
+
+                });
+            })();
         </script>
     </head>
     <body>
@@ -50,5 +67,6 @@
         <h1>System running: <span id="isRunning">False</span></h1>
         <button onclick="start()">Start</button>
         <button onclick="stop()">Stop</button>
+        <div id="captures"></div>
     </body>
 </html>

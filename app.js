@@ -47,6 +47,14 @@ app.post('/stop', function(req, res) {
     sendRequest('stop', res);
 });
 
+app.post('/count-captures', function(req, res) {
+    sendRequest('count-captures', res);
+});
+
+app.post('/capture/:n', function(req, res) {
+    sendRequest('capture'+req.params.n, res);
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log('Server running on port ' + port);
