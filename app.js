@@ -52,7 +52,7 @@ app.post('/count-captures', function(req, res) {
 });
 
 app.post('/capture/:n', function(req, res) {
-    sendRequest('capture'+req.params.n, res);
+    sendRequest('capture/'+req.params.n, res);
 });
 
 var port = process.env.PORT || 3000;
