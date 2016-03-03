@@ -15,8 +15,15 @@
             }
 
             function setAddress() {
-                post("set-host/"+document.getElementById("systemHost").value, function(res) {});
-                post("set-port/"+document.getElementById("systemPort").value, function(res) {});
+                post("set-host/"+document.getElementById("systemHost").value, function(res) {
+                    post("set-port/"+document.getElementById("systemPort").value, function(res) {
+                        post("count-captures", function(res) {
+                            var count = parseInt(res);
+                            document.getElementById("captures").innerHTML = "";
+                            getCaptures(count);
+                        });
+                    });
+                });
             }
 
             function start() {
@@ -50,13 +57,6 @@
                     getCaptures(n-1);
                 });
             }
-
-            (function() {
-                post("count-captures", function(res) {
-                    var count = parseInt(res);
-
-                });
-            })();
         </script>
     </head>
     <body>
