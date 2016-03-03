@@ -20,7 +20,7 @@
                         post("count-captures", function(res) {
                             var count = parseInt(res);
                             document.getElementById("captures").innerHTML = "";
-                            getCaptures(count);
+                            getCaptures(count-1);
                         });
                     });
                 });
