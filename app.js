@@ -51,7 +51,7 @@ app.post('/count-captures', function(req, res) {
     sendRequest('count-captures', res);
 });
 
-app.post('/capture/:n', function(req, res) {
+app.get('/capture/:n', function(req, res) {
     sendRequest('capture/'+req.params.n, res);
 });
 
