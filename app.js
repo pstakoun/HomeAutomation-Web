@@ -6,11 +6,11 @@ var port;
 
 var sendResponse = function(response, result) {
     response.send(result);
-}
+};
 
 var sendImage = function(response, result) {
     response.sendFile(result);
-}
+};
 
 var sendRequest = function(str, response, f) {
     var options = {
@@ -25,7 +25,9 @@ var sendRequest = function(str, response, f) {
             result += s;
         });
 
-        res.on('end', f(response, result));
+        res.on('end', function() {
+            f(response, result);
+        });
     };
     http.request(options, callback).on('error', function (e) { response.send('ERROR: Connection error!'); }).end();
 };
