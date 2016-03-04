@@ -20,9 +20,7 @@
                         post("count-captures", function(res) {
                             var count = parseInt(res);
                             document.getElementById("captures").innerHTML = "";
-                            for (var i = 0; i < count; i++) {
-                                document.getElementById("captures").innerHTML += "<img src=\"capture/"+i+"\">";
-                            }
+                            getCaptures(count-1);
                         });
                     });
                 });
@@ -47,6 +45,16 @@
                         document.getElementById("isRunning").innerHTML = res;
                         document.getElementById("error").innerHTML = '';
                     }
+                });
+            }
+
+            function getCaptures(n) {
+                if (n < 0) {
+                    return;
+                }
+                post("capture/"+n, function(res) {
+                    document.getElementById("captures").innerHTML += res;
+                    getCaptures(n-1);
                 });
             }
         </script>

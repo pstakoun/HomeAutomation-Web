@@ -4,15 +4,7 @@ var http = require('http');
 var host;
 var port;
 
-var sendResponse = function(response, result) {
-    response.send(result);
-};
-
-var sendImage = function(response, result) {
-    response.sendFile(result);
-};
-
-var sendRequest = function(str, response, f) {
+var sendRequest = function(str, response) {
     var options = {
         host: host,
         path: '/'+str,
@@ -26,7 +18,7 @@ var sendRequest = function(str, response, f) {
         });
 
         res.on('end', function() {
-            f(response, result);
+            response.send(result);
         });
     };
     http.request(options, callback).on('error', function (e) { response.send('ERROR: Connection error!'); }).end();
@@ -48,19 +40,19 @@ app.post('/set-port/:port', function(req, res) {
 });
 
 app.post('/start', function(req, res) {
-    sendRequest('start', res, sendResponse);
+    sendRequest('start', res);
 });
 
 app.post('/stop', function(req, res) {
-    sendRequest('stop', res, sendResponse);
+    sendRequest('stop', res);
 });
 
 app.post('/count-captures', function(req, res) {
-    sendRequest('count-captures', res, sendResponse);
+    sendRequest('count-captures', res);
 });
 
-app.get('/capture/:n', function(req, res) {
-    sendRequest('capture/'+req.params.n, res, sendImage);
+app.post('/capture/:n', function(req, res) {
+    res.send('<img src="http://'+host+':'+port+'/capture/'+req.params.n+'"/>');
 });
 
 var port = process.env.PORT || 3000;
