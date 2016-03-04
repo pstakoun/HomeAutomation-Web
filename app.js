@@ -4,7 +4,15 @@ var http = require('http');
 var host;
 var port;
 
-var sendRequest = function(str, response) {
+var sendResponse = function(response, result) {
+    response.send(result);
+}
+
+var sendImage = function(response, result) {
+    response.sendFile(result);
+}
+
+var sendRequest = function(str, response, f) {
     var options = {
         host: host,
         path: '/'+str,
@@ -17,9 +25,7 @@ var sendRequest = function(str, response) {
             result += s;
         });
 
-        res.on('end', function() {
-            response.send(result);
-        });
+        res.on('end', f(response, result));
     };
     http.request(options, callback).on('error', function (e) { response.send('ERROR: Connection error!'); }).end();
 };
@@ -40,19 +46,19 @@ app.post('/set-port/:port', function(req, res) {
 });
 
 app.post('/start', function(req, res) {
-    sendRequest('start', res);
+    sendRequest('start', res, sendResponse);
 });
 
 app.post('/stop', function(req, res) {
-    sendRequest('stop', res);
+    sendRequest('stop', res, sendResponse);
 });
 
 app.post('/count-captures', function(req, res) {
-    sendRequest('count-captures', res);
+    sendRequest('count-captures', res, sendResponse);
 });
 
 app.get('/capture/:n', function(req, res) {
-    sendRequest('capture/'+req.params.n, res);
+    sendRequest('capture/'+req.params.n, res, sendImage);
 });
 
 var port = process.env.PORT || 3000;
