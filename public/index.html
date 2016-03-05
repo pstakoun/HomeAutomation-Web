@@ -2,6 +2,11 @@
 <html>
     <head>
         <title>Home Automation System</title>
+        <style>
+            .series img {
+                width: 33%;
+            }
+        </style>
         <script>
             function post(s, f) {
                 var xhttp = new XMLHttpRequest();
@@ -64,10 +69,10 @@
                             if (lastDate !== "") {
                                 document.getElementById("captures").innerHTML += "</div>";
                             }
-                            document.getElementById("captures").innerHTML += "<div class=\"series\">";
                             document.getElementById("captures").innerHTML += "<h2>"+date+"</h2>";
+                            document.getElementById("captures").innerHTML += "<div class=\"series\">";
                         }
-                        document.getElementById("captures").innerHTML += capture;
+                        document.getElementById("captures").lastChild.innerHTML = capture + document.getElementById("captures").lastChild.innerHTML;
                         getCaptures(n-1, date);
                     });
                 });
