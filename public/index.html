@@ -89,7 +89,9 @@
                     var count = parseInt(res);
                     console.log(count+" captures found");
                     document.getElementById("captures").innerHTML = "";
-                    getCapturesRecur(count-1, "");
+                    if (!isNaN(count)) {
+                        getCapturesRecur(count-1, "");
+                    }
                 });
             }
 
