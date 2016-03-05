@@ -22,6 +22,7 @@
             function setAddress() {
                 post("set-host/"+document.getElementById("systemHost").value, function(res) {
                     post("set-port/"+document.getElementById("systemPort").value, function(res) {
+                        isRunning();
                         getCaptures();
                     });
                 });
