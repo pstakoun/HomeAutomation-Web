@@ -49,7 +49,7 @@
                 });
             }
 
-            function getCaptures(n, lastDate) {
+            function getCapturesRecur(n, lastDate) {
                 if (n < 0) {
                     if (document.getElementById("captures").innerHTML !== "") {
                         document.getElementById("captures").innerHTML += "</div>";
@@ -68,7 +68,7 @@
                             document.getElementById("captures").innerHTML += "<div class=\"series\">";
                         }
                         document.getElementById("captures").lastChild.innerHTML = capture + document.getElementById("captures").lastChild.innerHTML;
-                        getCaptures(n-1, date);
+                        getCapturesRecur(n-1, date);
                     });
                 });
             }
@@ -78,11 +78,11 @@
                     var count = parseInt(res);
                     console.log(count+" captures found");
                     document.getElementById("captures").innerHTML = "";
-                    getCaptures(count-1, "");
+                    getCapturesRecur(count-1, "");
                 });
             }
 
-            (function(){
+            window.onload = function() {
                 post("get-host", function(host) {
                     if (host) {
                         post("get-port", function(port) {
@@ -94,7 +94,7 @@
                         });
                     }
                 });
-            })();
+            };
         </script>
     </head>
     <body>
