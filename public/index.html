@@ -49,6 +49,16 @@
                 });
             }
 
+            function isRunning() {
+                post("isRunning", function(res) {
+                    if (res.substring(0, 5) == "ERROR") {
+                        document.getElementById("error").innerHTML = res;
+                    } else {
+                        document.getElementById("isRunning").innerHTML = res;
+                    }
+                });
+            }
+
             function getCapturesRecur(n, lastDate) {
                 if (n < 0) {
                     if (document.getElementById("captures").innerHTML !== "") {
@@ -89,6 +99,7 @@
                             if (port) {
                                 document.getElementById("systemHost").value = host;
                                 document.getElementById("systemPort").value = port;
+                                document.getElementById("isRunning").value = isRunning();
                                 getCaptures();
                             }
                         });
@@ -102,7 +113,7 @@
         <input type="text" id="systemHost" placeholder="host">
         <input type="number" id="systemPort" placeholder="port">
         <button onclick="setAddress()">Set Address</button>
-        <h1>System running: <span id="isRunning">False</span></h1>
+        <h1>System running: <span id="isRunning"></span></h1>
         <button onclick="start()">Start</button>
         <button onclick="stop()">Stop</button>
         <div id="captures"></div>

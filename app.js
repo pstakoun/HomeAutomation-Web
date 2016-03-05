@@ -55,6 +55,10 @@ app.post('/stop', function(req, res) {
     sendRequest('stop', res);
 });
 
+app.post('/isRunning', function(req, res) {
+    sendRequest('isRunning', res);
+});
+
 app.post('/count-captures', function(req, res) {
     sendRequest('count-captures', res);
 });
