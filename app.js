@@ -56,7 +56,7 @@ app.post('/capture/:n', function(req, res) {
 });
 
 app.post('/capture/:n/date', function(req, res) {
-    sendRequest('/capture/'+req.params.n+'/date', res);
+    sendRequest('capture/'+req.params.n+'/date', res);
 });
 
 var port = process.env.PORT || 3000;
