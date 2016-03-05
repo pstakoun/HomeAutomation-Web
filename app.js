@@ -55,6 +55,10 @@ app.post('/capture/:n', function(req, res) {
     res.send('<img src="http://'+host+':'+port+'/capture/'+req.params.n+'"/>');
 });
 
+app.post('/capture/:n/date', function(req, res) {
+    sendRequest('/capture/'+req.params.n+'/date', res);
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log('Server running on port ' + port);

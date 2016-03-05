@@ -20,7 +20,7 @@
                         post("count-captures", function(res) {
                             var count = parseInt(res);
                             document.getElementById("captures").innerHTML = "";
-                            getCaptures(count-1);
+                            getCaptures(count-1, "");
                         });
                     });
                 });
@@ -48,13 +48,20 @@
                 });
             }
 
-            function getCaptures(n) {
+            function getCaptures(n, lastDate) {
                 if (n < 0) {
                     return;
                 }
                 post("capture/"+n, function(res) {
-                    document.getElementById("captures").innerHTML += res;
-                    getCaptures(n-1);
+                    var capture = res;
+                    post("capture/"+n+"/date", function(res) {
+                        var date = res;
+                        if (date != lastDate) {
+                            document.getElementById("captures").innerHTML += date;
+                        }
+                        document.getElementById("captures").innerHTML += capture;
+                        getCaptures(n-1, date);
+                    });
                 });
             }
         </script>
