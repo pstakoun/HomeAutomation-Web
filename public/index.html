@@ -22,12 +22,7 @@
             function setAddress() {
                 post("set-host/"+document.getElementById("systemHost").value, function(res) {
                     post("set-port/"+document.getElementById("systemPort").value, function(res) {
-                        post("count-captures", function(res) {
-                            var count = parseInt(res);
-                            console.log(count+" captures found");
-                            document.getElementById("captures").innerHTML = "";
-                            getCaptures(count-1, "");
-                        });
+                        getCaptures();
                     });
                 });
             }
@@ -77,6 +72,29 @@
                     });
                 });
             }
+
+            function getCaptures() {
+                post("count-captures", function(res) {
+                    var count = parseInt(res);
+                    console.log(count+" captures found");
+                    document.getElementById("captures").innerHTML = "";
+                    getCaptures(count-1, "");
+                });
+            }
+
+            (function(){
+                post("get-host", function(host) {
+                    if (host) {
+                        post("get-port", function(port) {
+                            if (port) {
+                                document.getElementById("systemHost").value = host;
+                                document.getElementById("systemPort").value = port;
+                                getCaptures();
+                            }
+                        });
+                    }
+                });
+            })();
         </script>
     </head>
     <body>

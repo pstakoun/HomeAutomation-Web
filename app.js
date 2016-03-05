@@ -29,6 +29,14 @@ app.get('/', function(req, res) {
     res.sendFile('index.html');
 });
 
+app.post('/get-host', function(req, res) {
+    res.send(host || '');
+});
+
+app.post('/get-port', function(req, res) {
+    res.send(port || '');
+});
+
 app.post('/set-host/:host', function(req, res) {
     host = req.params.host;
     res.send('');
