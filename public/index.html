@@ -51,6 +51,9 @@
 
             function getCaptures(n, lastDate) {
                 if (n < 0) {
+                    if (document.getElementById("captures").innerHTML !== "") {
+                        document.getElementById("captures").innerHTML += "</div>";
+                    }
                     return;
                 }
                 post("capture/"+n, function(res) {
@@ -58,7 +61,11 @@
                     post("capture/"+n+"/date", function(date) {
                         console.log(capture+" | "+date);
                         if (date !== lastDate) {
-                            document.getElementById("captures").innerHTML += date;
+                            if (lastDate !== "") {
+                                document.getElementById("captures").innerHTML += "</div>";
+                            }
+                            document.getElementById("captures").innerHTML += "<div class=\"series\">";
+                            document.getElementById("captures").innerHTML += "<h2>"+date+"</h2>";
                         }
                         document.getElementById("captures").innerHTML += capture;
                         getCaptures(n-1, date);
