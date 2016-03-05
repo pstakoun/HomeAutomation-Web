@@ -34,7 +34,7 @@ app.post('/get-host', function(req, res) {
 });
 
 app.post('/get-port', function(req, res) {
-    res.send(port || '');
+    res.send((port || '').toString());
 });
 
 app.post('/set-host/:host', function(req, res) {
