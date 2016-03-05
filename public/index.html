@@ -19,6 +19,7 @@
                     post("set-port/"+document.getElementById("systemPort").value, function(res) {
                         post("count-captures", function(res) {
                             var count = parseInt(res);
+                            console.log(count+" captures found");
                             document.getElementById("captures").innerHTML = "";
                             getCaptures(count-1, "");
                         });
@@ -54,9 +55,9 @@
                 }
                 post("capture/"+n, function(res) {
                     var capture = res;
-                    post("capture/"+n+"/date", function(res) {
-                        var date = res;
-                        if (date != lastDate) {
+                    post("capture/"+n+"/date", function(date) {
+                        console.log(capture+" | "+date);
+                        if (date !== lastDate) {
                             document.getElementById("captures").innerHTML += date;
                         }
                         document.getElementById("captures").innerHTML += capture;
